@@ -1,8 +1,6 @@
 const expressJwt = require('express-jwt');
 const CONFIG = require('../config/config');
 
-module.exports = jwt;
-
 function jwt() {
     const secret = CONFIG.jwt_encryption;
     return expressJwt({ secret }).unless({
@@ -13,3 +11,5 @@ function jwt() {
         ]
     });
 }
+
+module.exports = jwt;

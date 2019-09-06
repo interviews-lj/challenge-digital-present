@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const postController = require('../../controllers/postController');
+const verification = require('../../services/verificationService');
 
-router.post('/posts', (req, res) => res.send({message: "Post Route works for"}));
+router.get('/posts/list', postController.listPosts);
 
 module.exports = router;
