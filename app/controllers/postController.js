@@ -16,4 +16,18 @@ postController.listPosts = async function(req, res) {
     });
 };
 
+postController.getPost = async function(req, res) {
+    await Post.findOne({
+        where: { id: req.params.id },
+        attributes: ['name', 'content']
+    })
+    .then( post => {
+        if (!post) return res.status(404).json({ message: "Post not found!"})
+        res.status(200).json(post);
+    })
+    .catch(err => {
+        res.status(401).send("Error: " + err);
+    });
+};
+
 module.exports = postController;
