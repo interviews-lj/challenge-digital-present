@@ -1,9 +1,9 @@
 const db = require('../config/db.config')
 const bcrypt = require('bcryptjs');
-
+const CONFIG = require('../config/config')
+const jwt = require('jsonwebtoken');
 const User = db.user;
-const Role = db.role;
-const Op = db.Sequelize.Op;
+
 
 const authController = {};
 
@@ -27,5 +27,28 @@ authController.registerUser = async function(req, res) {
         });
     }
 };
+
+authController.loginUser = async function(req, res) {
+    User.findOne({
+        where: {
+            username: req.body.username
+        }
+    }).then(user => {
+        if (!user) {
+            return res.status(404).send('User Not Found!');
+        }
+
+        let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) {
+            return res.status(401).send({ auth: false, accessToken: null, reason: "Invalid Password!" });
+        }
+
+        let token = jwt.sign({ id: user.id }, CONFIG.jwt_secret, { expiresIn: CONFIG.jwt_expiration });
+        res.status(200).send({ auth: true, accessToken: token });
+
+    }).catch(err => {
+        res.status(500).send("Error " + err);
+    });
+}
 
 module.exports = authController;
