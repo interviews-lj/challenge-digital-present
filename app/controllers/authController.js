@@ -43,7 +43,7 @@ authController.loginUser = async function(req, res) {
             return res.status(401).send({ auth: false, accessToken: null, reason: "Invalid Password!" });
         }
 
-        let token = jwt.sign({ id: user.id }, CONFIG.jwt_secret, { expiresIn: CONFIG.jwt_expiration });
+        let token = jwt.sign({ username: user.username, role:user.role }, CONFIG.jwt_secret, { expiresIn: CONFIG.jwt_expiration });
         res.status(200).send({ auth: true, accessToken: token });
 
     }).catch(err => {

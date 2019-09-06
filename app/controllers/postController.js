@@ -30,4 +30,21 @@ postController.getPost = async function(req, res) {
     });
 };
 
+postController.updatePost = async function(req, res) {
+    const { name, content } = req.body;
+    if (!name || !content) return res.status(400).json({ message: "Bad Request"});
+    if (req.user.role !== 'ADMIN') return res.status(401).json({ message: "Unauthorized"});
+    await Post.findOne({
+        where: { id: req.params.id },
+    })
+    .then( post => {
+        if (!post) return res.status(404).json({ message: "Post not found!"})
+        post.update({ name, content})
+        res.status(200).json({ message: "Post Update Success!"});
+    })
+    .catch(err => {
+        res.status(401).send("Error: " + err);
+    });
+};
+
 module.exports = postController;

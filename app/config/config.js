@@ -12,8 +12,8 @@ CONFIG.db_name      = process.env.DB_NAME       || 'name';
 CONFIG.db_user      = process.env.DB_USER       || 'root';
 CONFIG.db_password  = process.env.DB_PASSWORD   || 'db-password';
 
-CONFIG.jwt_secret  = process.env.JWT_ENCRYPTION || '+MbQeThWmZq4t7w!z%C*F-JaNcRfUjXn2r5u8x/A?D(G+KbPeSgVkYp3s6v9y$B&';
-CONFIG.jwt_expiration  = process.env.JWT_EXPIRATION || '10000';
+CONFIG.jwt_secret  = process.env.JWT_SECRET || '9z$C&F)J@NcRfTjWnZr4u7x!A%D*G-Ka';
+CONFIG.jwt_expiration  = process.env.JWT_EXPIRATION || '86400';
 
 CONFIG.userRoles = ['USER', 'ADMIN'];
 
