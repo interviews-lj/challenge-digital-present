@@ -6,7 +6,8 @@ const errorHandler = require('./app/services/errorHandler');
 const CONFIG = require('./app/config/config');
 const authRouter = require('./app/routes/v1/auth');
 const postRouter = require('./app/routes/v1/posts');
-const db = require('./app/config/db.config')
+const db = require('./app/config/db.config');
+const jwt = require('./app/services/jsonWebTokenService')
 
 const app = express();
 
@@ -19,7 +20,15 @@ app.use(errorHandler);
 app.use('/api/v1/', authRouter);
 app.use('/api/v1/', postRouter);
 
-db.sequelize.authenticate().then(() => console.log("Connection to MySQL database succesful"))
+//app.use(jwt());
+
+db.sequelize.authenticate().then(() => {
+    console.log("Connection to MySQL database succesful");
+    // force: true will drop the table if it already exists
+    db.sequelize.sync({force: true}).then(() => {
+        console.log('Drop and Resync with { force: true }');
+  });
+})
 .catch(error => console.error('Cannot connect to MySQL: ', error));
 
 const server = app.listen(CONFIG.port, (error) => {

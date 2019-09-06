@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const authController = require('../../controllers/authController');
+const verification = require('../../services/verificationService');
 
-router.post('/register', (req, res) => res.send({message: "AUTH Route works"}));
+router.post('/register', [verification.checkDuplicateUserName, verification.checkRolesExisted], authController.registerUser);
 
 module.exports = router;
