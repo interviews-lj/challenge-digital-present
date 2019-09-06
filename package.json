@@ -4,7 +4,7 @@
   "description": "This is a solution for a challenge given by Digital Present",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "author": "Ljubomir Sinadinovski",
   "license": "MIT",
